@@ -1,6 +1,6 @@
 # Airway-Be
 
-# 🚀 Welcome to Your Node.js Express AirWay Horizons Project! 🌟
+# 🚀 Welcome to AirWay Horizons Project! 🌟
 
 ## 📖 Overview
 
