@@ -1,4 +1,4 @@
-export const dbName = "sample_mflix";
-export const collectionNameTour = "tour";
+export const dbName = "Airway_Horizons";
+export const collectionNameTour = "tours";
 export const collectionNameUser = "users";
 export const collectionNameBooking = "bookings";
