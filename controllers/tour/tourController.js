@@ -19,7 +19,17 @@ export const getTour = async (req, res) => {
 
 export const postTour = async (req, res) => {
   try {
-    await insertDocument(collectionNameTour, req.validatedBody);
+    const tourAddSchema = {
+      name: req.validatedBody?.name ?? "",
+      content: req.validatedBody?.content ?? "",
+      images: req.validatedBody?.images ?? [],
+      duration: req.validatedBody?.duration ?? "",
+      destination: req.validatedBody?.destination ?? "",
+      services: req.validatedBody?.services ?? [],
+      tags: req.validatedBody?.tags ?? [],
+      status: "published", // "draft" or "published"
+    };
+    await insertDocument(collectionNameTour, tourAddSchema);
     return successResponse(res, "Successfully added tour");
   } catch (error) {
     return errorResponse(res, "Failed to add tour", error);

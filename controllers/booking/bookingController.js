@@ -1,4 +1,7 @@
-import { collectionNameBooking } from "../../utils/helper.js";
+import {
+  collectionNameBooking,
+  collectionNameUser,
+} from "../../utils/helper.js";
 import {
   deleteDocument,
   getByIdDocument,
@@ -7,6 +10,7 @@ import {
   updateDocument,
 } from "../../db/dbService.js";
 import { errorResponse, successResponse } from "../../utils/responseHelper.js";
+import { ObjectId } from "mongodb";
 
 export const getAllBooking = async (req, res) => {
   try {
@@ -19,7 +23,35 @@ export const getAllBooking = async (req, res) => {
 
 export const postBooking = async (req, res) => {
   try {
-    await insertDocument(collectionNameBooking, req.validatedBody);
+    const user = await getByIdDocument(collectionNameUser, req.userData.id);
+
+    const bookingDocument = {
+      customerId: new ObjectId(user?._id),
+      packageId: req?.validatedBody?.packageId,
+      bookingDate: new Date(),
+      specialRequests: req?.validatedBody?.specialRequests,
+      status: "pending", // pending, confirmed, cancelled
+      adults: req?.validatedBody?.adults ?? 0,
+      ladies: req?.validatedBody?.ladies ?? 0,
+      kids: req?.validatedBody?.kids ?? 0,
+      fromDate: req?.validatedBody?.fromDate ?? "",
+      toDate: req?.validatedBody?.toDate ?? "",
+      name: req?.validatedBody?.name ?? user?.name,
+      email: req?.validatedBody?.email ?? user?.email,
+      phone: req?.validatedBody?.phone ?? user?.phone,
+      payment: {
+        paymentId: "",
+        paymentStatus: "pending",
+        paymentMethod: "",
+        paymentAmount: 0.0,
+        paymentDate: null,
+        currency: null,
+      },
+      itinerary: [],
+      cancellationPolicy: "Free cancellation within 24 hours of booking.",
+    };
+
+    await insertDocument(collectionNameBooking, bookingDocument);
     return successResponse(res, "Successfully added Booking");
   } catch (error) {
     return errorResponse(res, "Failed to add Booking", error);

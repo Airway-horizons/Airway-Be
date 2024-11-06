@@ -89,11 +89,11 @@ export const loginUser = async (req, res) => {
           }
         );
       });
-
       // Compare the hashed passwords
       if (hashedLoginPassword !== findEmailRegistered?.password) {
         return errorResponse(res, "Invalid  password", 401);
       }
+
       const token = jwt.sign(
         {
           id: findEmailRegistered._id?.toString(),

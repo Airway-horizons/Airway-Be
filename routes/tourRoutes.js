@@ -16,9 +16,9 @@ const router = express.Router();
 
 // Route for fetching users
 router.get("/", getTour);
-router.post("/add", validateSchema(addTourSchema), postTour);
-router.delete("/delete/:id", deleteTour);
-router.patch("/update/:id", patchTour);
+router.post("/add", authenticateJWT, validateSchema(addTourSchema), postTour);
+router.delete("/delete/:id", authenticateJWT, deleteTour);
+router.patch("/update/:id", authenticateJWT, patchTour);
 router.get("/:id", authenticateJWT, getByIdTour);
 
 export default router;

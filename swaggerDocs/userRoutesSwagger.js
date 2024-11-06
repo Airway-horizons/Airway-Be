@@ -25,6 +25,8 @@
  *   get:
  *     summary: Get list of users
  *     tags: [Users]
+ *     security:
+ *       - BearerAuth: []  # Requires authentication
  *     responses:
  *       200:
  *         description: The list of users
@@ -84,6 +86,8 @@
  *   patch:
  *     summary: Update a user profile
  *     tags: [Users]
+ *     security:
+ *       - BearerAuth: []  # Requires authentication
  *     parameters:
  *       - in: path
  *         name: id
@@ -118,6 +122,8 @@
  *   get:
  *     summary: Get a user by ID
  *     tags: [Users]
+ *     security:
+ *       - BearerAuth: []  # Requires authentication
  *     parameters:
  *       - in: path
  *         name: id
@@ -127,7 +133,7 @@
  *           type: string
  *     responses:
  *       200:
- *         description: user fetched successfully
+ *         description: User fetched successfully
  *       404:
- *         description: user not found
+ *         description: User not found
  */

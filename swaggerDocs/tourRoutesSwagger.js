@@ -6,18 +6,46 @@
  *       type: object
  *       required:
  *         - name
- *         - description
- *         - location
+ *         - content
+ *         - images
+ *         - duration
+ *         - destination
+ *         - services
+ *         - tags
+ *         - status
  *       properties:
  *         name:
  *           type: string
  *           description: The name of the tour
- *         description:
+ *         content:
  *           type: string
  *           description: Detailed description of the tour
- *         location:
+ *         images:
+ *           type: array
+ *           items:
+ *             type: string
+ *             format: uri
+ *           description: Array of image URLs for the tour
+ *         duration:
  *           type: string
- *           description: The location of the tour
+ *           description: Duration of the tour (e.g., "7 days")
+ *         destination:
+ *           type: string
+ *           description: The destination of the tour
+ *         services:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Array of services included in the tour
+ *         tags:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: Array of tags related to the tour
+ *         status:
+ *           type: string
+ *           enum: [draft, published]
+ *           description: Status of the tour (e.g., "draft" or "published")
  */
 
 /**
@@ -43,6 +71,8 @@
  *   post:
  *     summary: Add a new tour
  *     tags: [Tours]
+ *     security:  # Specify that this endpoint requires authentication
+ *       - BearerAuth: []  # Reference the security scheme
  *     requestBody:
  *       required: true
  *       content:
@@ -54,6 +84,8 @@
  *         description: Tour added successfully
  *       400:
  *         description: Bad request
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
@@ -62,6 +94,8 @@
  *   delete:
  *     summary: Delete a tour by ID
  *     tags: [Tours]
+ *     security:  # Specify that this endpoint requires authentication
+ *       - BearerAuth: []  # Reference the security scheme
  *     parameters:
  *       - in: path
  *         name: id
@@ -74,6 +108,8 @@
  *         description: Tour deleted successfully
  *       404:
  *         description: Tour not found
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
@@ -82,6 +118,8 @@
  *   patch:
  *     summary: Update a tour by ID
  *     tags: [Tours]
+ *     security:  # Specify that this endpoint requires authentication
+ *       - BearerAuth: []  # Reference the security scheme
  *     parameters:
  *       - in: path
  *         name: id
@@ -100,6 +138,8 @@
  *         description: Tour updated successfully
  *       400:
  *         description: Invalid input
+ *       401:
+ *         description: Unauthorized
  */
 
 /**
@@ -108,6 +148,8 @@
  *   get:
  *     summary: Get a tour by ID
  *     tags: [Tours]
+ *     security:  # Specify that this endpoint requires authentication
+ *       - BearerAuth: []  # Reference the security scheme
  *     parameters:
  *       - in: path
  *         name: id
@@ -120,4 +162,6 @@
  *         description: Tour fetched successfully
  *       404:
  *         description: Tour not found
+ *       401:
+ *         description: Unauthorized
  */

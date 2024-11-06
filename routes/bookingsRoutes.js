@@ -17,7 +17,7 @@ router.get("/", authenticateJWT, getAllBooking);
 router.post(
   "/add",
   authenticateJWT,
-  validateSchema(addBookingSchema),
+  // validateSchema(addBookingSchema),
   postBooking
 );
 router.delete("/delete/:id", authenticateJWT, deleteBooking);
