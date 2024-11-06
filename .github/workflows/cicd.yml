@@ -1,0 +1,66 @@
+name: CICD
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      # Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'  # or specify the version you use
+
+      # Install dependencies
+      - name: Install dependencies
+        run: npm install
+        
+     # Step 4: Generate Deployment Package
+      - name: Generate Deployment Package
+        run: |
+          zip -r nodejs-app-build.zip .  # zips the current directory (use the specific folder if needed)
+
+    # Step 5: Deploy to Elastic Beanstalk
+      - name: Deploy to Elastic Beanstalk
+        uses: einaregilsson/beanstalk-deploy@v21
+        with:
+          aws_access_key: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws_secret_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          application_name: MyApplicationName  # Replace with your application name
+          environment_name: MyApplication-Environment  # Replace with your environment name
+          version_label: ${{ github.sha }}  # You can use the commit SHA as the version label
+          region: us-west-2  # Specify your region
+          deployment_package: nodejs-app-build.zip  # The zip file to deploy
+
+      # Run tests (if you have tests)
+      # - name: Run tests
+      #   run: npm test
+
+      # Build the project (if applicable)
+      # - name: Build the project
+      #   run: npm run build  # change this if your build command is different
+
+      # Deploy the application
+      # - name: Deploy to Elastic Beanstalk
+      #   run: |
+      #     eb init -p node.js --region ${{ secrets.AWS_REGION }} ${{ secrets.EB_APPLICATION_NAME }}
+      #     eb use ${{ secrets.EB_ENV_NAME }}
+      #     eb deploy
+      #   env:
+      #     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+      #     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      # Optionally, if you want to notify success or failure (for example, to Slack or other channels)
+      # - name: Notify deployment status
+      #   uses: some/slack-action@v1
+      #   with:
+      #     status: success
