@@ -45,6 +45,6 @@ app.use("/api/bookings", bookingsRoutes); // Routes for tour-related endpoints
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Start server
-app.listen(port, () => {
+app.listen(port, "0.0.0.0", () => {
   console.log(`Server running on http://localhost:${port}`);
 });
