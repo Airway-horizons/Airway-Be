@@ -29,7 +29,7 @@ const __dirname = dirname(__filename);
 
 // Serve static files from the 'uploads' directory
 app.use(express.json());
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 80;
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
