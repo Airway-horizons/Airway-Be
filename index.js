@@ -4,7 +4,6 @@ import path from "path";
 import dotenv from "dotenv";
 import express from "express";
 import { dirname } from "path";
-import passport from "passport";
 import { fileURLToPath } from "url";
 import swaggerUi from "swagger-ui-express";
 
@@ -13,7 +12,6 @@ import swaggerDocs from "./swaggerConfig.js";
 import userRoutes from "./routes/userRoutes.js";
 import tourRoutes from "./routes/tourRoutes.js";
 import bookingsRoutes from "./routes/bookingsRoutes.js";
-import passportConfig from "./middleware/jwt/passport.js";
 
 dotenv.config();
 const app = express();
@@ -32,8 +30,6 @@ const __dirname = dirname(__filename);
 // Serve static files from the 'uploads' directory
 app.use(express.json());
 const port = process.env.PORT || 3001;
-app.use(passport.initialize());
-passportConfig(passport);
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
