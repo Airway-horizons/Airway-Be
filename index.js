@@ -29,7 +29,7 @@ const __dirname = dirname(__filename);
 
 // Serve static files from the 'uploads' directory
 app.use(express.json());
-const port = process.env.PORT || 80;
+const port = process.env.PORT || 3000;
 
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
@@ -45,6 +45,6 @@ app.use("/api/bookings", bookingsRoutes); // Routes for tour-related endpoints
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocs));
 
 // Start server
-app.listen(port, "0.0.0.0", () => {
+app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);
 });
