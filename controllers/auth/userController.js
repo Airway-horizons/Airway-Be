@@ -59,6 +59,7 @@ export const addUsers = async (req, res) => {
         city: "",
         address: "",
         zipcode: "",
+        varified: false,
       });
       return successResponse(res, "Successfully added user", insertUser);
     }
