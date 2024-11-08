@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Email Template</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .header {
+        padding: 20px;
+        text-align: center;
+        background-color: #007bff;
+        color: #ffffff;
+      }
+      .header img {
+        max-width: 100px;
+        margin: 0 auto;
+      }
+      .content {
+        padding: 20px;
+        text-align: center;
+      }
+      .footer {
+        padding: 20px;
+        text-align: center;
+        font-size: 0.9em;
+        color: #777;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header Section with Logo -->
+      <div class="header">
+        <img src="<%= logoUrl %>" alt="Logo" />
+      </div>
+
+      <!-- Main Content Section -->
+      <div class="content">
+        <h1>Welcome, <%= username %>!</h1>
+        <p>
+          We are thrilled to have you onboard. Here’s to amazing adventures and
+          unforgettable experiences!
+        </p>
+      </div>
+
+      <!-- Footer Section -->
+      <div class="footer">
+        <p>
+          If you have any questions, feel free to
+          <a href="mailto:support@example.com">contact us</a>.
+        </p>
+        <p>© 2024 Package Booking Website</p>
+      </div>
+    </div>
+  </body>
+</html>

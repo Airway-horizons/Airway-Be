@@ -19,10 +19,13 @@ export const getTour = async (req, res) => {
 
 export const postTour = async (req, res) => {
   try {
+    const imageFiles = req.files || [];
+    const imageUrls = imageFiles.map((file) => `/uploads/${file.filename}`);
+
     const tourAddSchema = {
       name: req.validatedBody?.name ?? "",
       content: req.validatedBody?.content ?? "",
-      images: req.validatedBody?.images ?? [],
+      images: imageUrls,
       duration: req.validatedBody?.duration ?? "",
       destination: req.validatedBody?.destination ?? "",
       services: req.validatedBody?.services ?? [],

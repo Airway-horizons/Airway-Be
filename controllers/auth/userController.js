@@ -12,6 +12,7 @@ import {
   insertDocument,
   updateDocument,
 } from "../../db/dbService.js";
+import { sendTemplatedEmail } from "../../mail/email.js";
 
 export const getUsers = async (req, res) => {
   try {
@@ -61,6 +62,12 @@ export const addUsers = async (req, res) => {
         zipcode: "",
         varified: false,
       });
+      sendTemplatedEmail(
+        "recipient@example.com",
+        "Welcome to Our Service",
+        "John Doe",
+        "https://example.com/logo.png" // URL of the logo image
+      );
       return successResponse(res, "Successfully added user", insertUser);
     }
   } catch (error) {
