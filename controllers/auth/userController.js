@@ -63,10 +63,10 @@ export const addUsers = async (req, res) => {
         varified: false,
       });
       sendTemplatedEmail(
-        "recipient@example.com",
-        "Welcome to Our Service",
-        "John Doe",
-        "https://example.com/logo.png" // URL of the logo image
+        email,
+        "Welcome to Airway Horizons",
+        name,
+        "https://airwayhorizons.com/logo/airwaylogo.png" // URL of the logo image
       );
       return successResponse(res, "Successfully added user", insertUser);
     }

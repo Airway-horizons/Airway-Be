@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Email Template</title>
+    <title>Airway Horizons</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -23,7 +23,7 @@
       .header {
         padding: 20px;
         text-align: center;
-        background-color: #007bff;
+        background-color: #fff;
         color: #ffffff;
       }
       .header img {
@@ -40,31 +40,136 @@
         font-size: 0.9em;
         color: #777;
       }
+
+      .cta-button {
+        background: "rgb(15, 94, 85) !important";
+        color: "#fff !important";
+        padding: 8px 13px;
+        font-size: 11px;
+        font-weight: 400;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .cta-button:hover {
+        background: "rgb(9 94 89) !important";
+      }
+
+      .tour-cards-container {
+        display: flex;
+        justify-content: space-between; /* Correct usage, no quotes or !important */
+      }
+
+      .tour-card {
+        background-color: white;
+        border-radius: 22px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        text-align: center;
+        transition: transform 0.3s ease;
+        width: 23%;
+        margin-right: 12px;
+      }
+
+      .tour-card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 10px;
+      }
+
+      .tour-card h3 {
+        font-size: 12px;
+        color: #333;
+        padding: 0px 0;
+      }
+
+      .tour-card p {
+        font-size: 11px;
+        color: #777;
+        padding: 0 0px 0px;
+        line-height: 1.4;
+      }
+
+      .tour-card:hover {
+        transform: translateY(-10px);
+      }
     </style>
   </head>
   <body>
     <div class="container">
       <!-- Header Section with Logo -->
       <div class="header">
-        <img src="<%= logoUrl %>" alt="Logo" />
+        <img src="<%= logoUrl %>" alt="Logo" style="max-width: 230px" />
       </div>
 
       <!-- Main Content Section -->
       <div class="content">
         <h1>Welcome, <%= username %>!</h1>
         <p>
-          We are thrilled to have you onboard. Here’s to amazing adventures and
-          unforgettable experiences!
+          We're thrilled to have you onboard! Discover amazing tour packages and
+          start your next adventure with us.
         </p>
+        <a href="www.airwayhorizons.com" class="cta-button"
+          >Book Your Next Tour Click Now!</a
+        >
+      </div>
+
+      <div class="tour-cards-container">
+        <div class="tour-card">
+          <img
+            src="https://airwayhorizons.com/home/des/0.jpg"
+            alt="Adventure Tour"
+          />
+          <h3>Adventure Tour</h3>
+          <p>
+            Explore breathtaking landscapes, wildlife, and thrilling activities.
+            A journey for adrenaline lovers!
+          </p>
+        </div>
+        <div class="tour-card">
+          <img
+            src="https://airwayhorizons.com/home/des/1.jpg"
+            alt="Beach Getaway"
+          />
+          <h3>Beach Getaway</h3>
+          <p>
+            Relax on pristine beaches with luxurious resorts, sunny days, and
+            fun-filled evenings.
+          </p>
+        </div>
+        <div class="tour-card">
+          <img
+            src="https://airwayhorizons.com/home/des/2.jpg"
+            alt="Historical Tour"
+          />
+          <h3>Historical Tour</h3>
+          <p>
+            Visit iconic landmarks and dive into the rich history and culture of
+            some of the world’s greatest cities.
+          </p>
+        </div>
+        <div class="tour-card">
+          <img
+            src="https://airwayhorizons.com/assets/packages/thailand/thai-1.jpg"
+            alt="Family Holiday"
+          />
+          <h3>Family Holiday</h3>
+          <p>
+            Fun activities, kid-friendly destinations, and relaxing getaways for
+            families of all sizes!
+          </p>
+        </div>
       </div>
 
       <!-- Footer Section -->
       <div class="footer">
         <p>
           If you have any questions, feel free to
-          <a href="mailto:support@example.com">contact us</a>.
+          <a href="mailto:support@airwayhorizons.com">contact us</a>.
         </p>
-        <p>© 2024 Package Booking Website</p>
+        <p>© 2024 Airway Horizons</p>
       </div>
     </div>
   </body>
