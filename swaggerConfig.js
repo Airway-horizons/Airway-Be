@@ -19,7 +19,7 @@ const swaggerOptions = {
     },
     servers: [
       {
-        url: "http://localhost:3000", // Replace with your server URL
+        url: "https://airway-be.onrender.com", // Replace with your server URL
         description: "Development server",
       },
     ],
