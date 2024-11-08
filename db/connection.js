@@ -5,7 +5,9 @@ import { dbName } from "../utils/helper.js";
 
 dotenv.config();
 
-const uri = process.env.DB_URL;
+// const uri = process.env.DB_URL;
+const uri =
+  "mongodb+srv://admin:0TknnldzwoDDTKLe@cluster0.9po0r.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 let db;
 
