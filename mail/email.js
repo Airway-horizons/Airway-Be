@@ -4,9 +4,10 @@ import nodemailer from "nodemailer";
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
+  secure: true,
   auth: {
-    user: "your-email@gmail.com",
-    pass: "your-email-password",
+    user: "admin@airwayhorizons.com",
+    pass: "vyvsxcyrykobyrlg",
   },
 });
 
@@ -16,7 +17,7 @@ export const sendTemplatedEmail = async (to, subject, username, logoUrl) => {
     const html = await ejs.renderFile(templatePath, { username, logoUrl });
 
     const mailOptions = {
-      from: "your-email@gmail.com",
+      from: "admin@airwayhorizons.com",
       to,
       subject,
       html,
