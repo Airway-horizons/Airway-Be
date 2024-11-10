@@ -127,7 +127,7 @@ export const updateUser = async (req, res) => {
 
   try {
     const profilePicture = req.file ? req.file.filename : null;
-    const { name, phone, state, city, address, zipcode } = req.body;
+    const { name, phone, state, city, address, zipcode, country } = req.body;
 
     const updatedUserData = {
       ...(name && { name }),
@@ -136,7 +136,8 @@ export const updateUser = async (req, res) => {
       ...(city && { city }),
       ...(address && { address }),
       ...(zipcode && { zipcode }),
-      ...(profilePicture && { profile: `/uploads/${profilePicture}` }), // Save the image path as a URL
+      ...(country && { country }),
+      ...(profilePicture && { profile: `/uploads/${profilePicture}` }),
     };
 
     const result = await updateDocument(
