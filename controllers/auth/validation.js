@@ -41,4 +41,5 @@ export const userUpdateSchema = Joi.object({
   city: Joi.string().optional(),
   address: Joi.string().optional(),
   zipcode: Joi.string().optional(),
+  country: Joi.string().optional(),
 });
