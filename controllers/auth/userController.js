@@ -62,12 +62,7 @@ export const addUsers = async (req, res) => {
         zipcode: "",
         varified: false,
       });
-      sendTemplatedEmail(
-        email,
-        "Welcome to Airway Horizons",
-        name,
-        "https://airwayhorizons.com/logo/airwaylogo.png" // URL of the logo image
-      );
+      sendTemplatedEmail(email, "Welcome to Airway Horizons", name);
       return successResponse(res, "Successfully added user", insertUser);
     }
   } catch (error) {

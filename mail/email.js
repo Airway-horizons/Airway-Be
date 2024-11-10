@@ -26,15 +26,14 @@ const transporter = nodemailer.createTransport({
  * @param {string} to - Recipient email address.
  * @param {string} subject - Subject of the email.
  * @param {string} username - Username to include in the template.
- * @param {string} logoUrl - URL of the logo to include in the template.
  */
-export const sendTemplatedEmail = async (to, subject, username, logoUrl) => {
+export const sendTemplatedEmail = async (to, subject, username, data) => {
   try {
     // Construct the path to the EJS template using the current directory
     const templatePath = path.join(__dirname, "cleanTemplate.ejs");
 
     // Render the HTML content from the EJS template
-    const html = await ejs.renderFile(templatePath, { username, logoUrl });
+    const html = await ejs.renderFile(templatePath, { username, data });
 
     // Prepare the email options
     const mailOptions = {

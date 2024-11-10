@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Airway Horizons - OTP Verification</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4;
+        color: #333;
+      }
+      .container {
+        max-width: 600px;
+        margin: 0 auto;
+        background-color: #ffffff;
+        border-radius: 8px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
+      .header {
+        padding: 20px;
+        text-align: center;
+        background-color: #009688;
+        color: #ffffff;
+      }
+      .header img {
+        max-width: 100px;
+        margin: 0 auto;
+      }
+      .content {
+        padding: 20px;
+        text-align: center;
+      }
+      .footer {
+        padding: 20px;
+        text-align: center;
+        font-size: 0.9em;
+        color: #777;
+      }
+
+      .cta-button {
+        background-color: #0f5e55;
+        color: #fff;
+        padding: 8px 13px;
+        font-size: 14px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+      }
+
+      .cta-button:hover {
+        background-color: #084d46;
+      }
+
+      .otp {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-top: 20px;
+        text-align: center;
+      }
+
+      .otp-box {
+        display: inline-block;
+        background-color: #f0f9f2;
+        padding: 15px 25px;
+        font-size: 32px;
+        font-weight: 700;
+        color: #0f5e55;
+        border-radius: 10px;
+        box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.1);
+        text-transform: uppercase;
+        letter-spacing: 5px;
+        animation: bounce 1.5s ease infinite;
+      }
+
+      @keyframes bounce {
+        0% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header Section with Logo -->
+      <div class="header">
+        <img
+          src="https://airwayhorizons.com/logo/airwaylogo.png"
+          alt="Logo"
+          style="max-width: 230px"
+        />
+      </div>
+
+      <!-- Main Content Section -->
+      <div class="content">
+        <h2>OTP Verification</h2>
+        <p>Please use the following 6-digit OTP to verify your account:</p>
+        <div class="otp">
+          <div class="otp-box">
+            <strong>123456</strong>
+            <!-- Replace with dynamic OTP in your backend code -->
+          </div>
+        </div>
+        <p>This OTP is valid for 10 minutes.</p>
+      </div>
+
+      <!-- Footer Section -->
+      <div class="footer">
+        <p>
+          If you have any questions, feel free to
+          <a href="mailto:support@airwayhorizons.com">contact us</a>.
+        </p>
+        <p>© 2024 Airway Horizons</p>
+      </div>
+    </div>
+  </body>
+</html>

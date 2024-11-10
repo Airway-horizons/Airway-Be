@@ -21,6 +21,9 @@ const router = express.Router();
 router.get("/", getUsers);
 router.post("/signup", validateSchema(addUserSchema), addUsers);
 router.post("/login", validateSchema(loginSchema), loginUser);
+router.post("/forget", validateSchema(loginSchema), loginUser);
+router.post("/verify", validateSchema(loginSchema), loginUser);
+router.post("/new-password", validateSchema(loginSchema), loginUser);
 router.patch(
   "/update/:id",
   validateSchema(userUpdateSchema),
