@@ -33,6 +33,18 @@ export const loginSchema = Joi.object({
   }),
 });
 
+const profilePicture = Joi.object({
+  // The 'profilePicture' should be a required file object, with additional validations like size and type
+  fieldname: Joi.string().valid("profilePicture").required(), // Ensure the field is correctly named
+  originalname: Joi.string()
+    .regex(/\.(jpg|jpeg|png|gif)$/i)
+    .required(), // File extension validation
+  mimetype: Joi.string()
+    .valid("image/jpeg", "image/png", "image/gif")
+    .required(), // Mime type validation
+  size: Joi.number().max(3145728).required(), // Max size of 3MB (3145728 bytes)
+}).optional();
+
 // Joi validation schema
 export const userUpdateSchema = Joi.object({
   name: Joi.string().min(2).max(100).optional(),
@@ -42,4 +54,5 @@ export const userUpdateSchema = Joi.object({
   address: Joi.string().optional(),
   zipcode: Joi.string().optional(),
   country: Joi.string().optional(),
+  profilePicture,
 });
