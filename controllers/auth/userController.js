@@ -62,7 +62,12 @@ export const addUsers = async (req, res) => {
         zipcode: "",
         varified: false,
       });
-      sendTemplatedEmail(email, "Welcome to Airway Horizons", name);
+      sendTemplatedEmail(
+        email,
+        "Welcome to Airway Horizons",
+        name,
+        "cleanTemplate.ejs"
+      );
       return successResponse(res, "Successfully added user", insertUser);
     }
   } catch (error) {
@@ -104,7 +109,7 @@ export const loginUser = async (req, res) => {
           role: findEmailRegistered.role?.toString(),
         }, // Payload
         process.env.SECRET_KEY, // Your secret key
-        { expiresIn: "1h" } // Token expiration time
+        { expiresIn: "48h" } // Token expiration time
       );
       const setData = {
         token: token,
@@ -193,13 +198,7 @@ export const forgetPassword = async (req, res) => {
     // Store the OTP and expiry time in the user's record
     await userCollection.updateOne({ email }, { $set: { otp, otpExpiry } });
 
-    // Send OTP to user's email
-    await sendEmail({
-      to: email,
-      subject: "Password Reset OTP",
-      template: "cleanTemplate.ejs", // Adjust as needed
-      context: { otp }, // Pass OTP to email template
-    });
+    sendTemplatedEmail(email, "Password Reset OTP", "", "otpTemplate.ejs", otp);
 
     return successResponse(res, "OTP sent to email");
   } catch (error) {
@@ -247,13 +246,33 @@ export const changePassword = async (req, res) => {
       return errorResponse(res, "OTP expired", 400);
     }
 
-    // Hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    // Generate a new salt using crypto.randomBytes
+    const salt = crypto.randomBytes(16);
 
-    // Update password and clear OTP fields
+    const hashedPassword = await new Promise((resolve, reject) => {
+      crypto.pbkdf2(
+        newPassword, // Password to hash
+        salt, // Salt value
+        310000, // Iteration count (can adjust as needed)
+        32, // Key length (32 bytes)
+        "sha256", // Hash algorithm
+        (err, derivedKey) => {
+          if (err) return reject(err); // Reject the promise in case of an error
+          resolve(derivedKey.toString("hex")); // Convert buffer to hex string for storage
+        }
+      );
+    });
+
+    // Update the password and clear OTP fields in the database
     await userCollection.updateOne(
       { email },
-      { $set: { password: hashedPassword }, $unset: { otp: "", otpExpiry: "" } }
+      {
+        $set: {
+          password: hashedPassword, // Save the hashed password
+          salt: salt.toString("hex"), // Save the salt in hex format
+        },
+        $unset: { otp: "", otpExpiry: "" }, // Clear OTP fields
+      }
     );
 
     return successResponse(res, "Password updated successfully");
@@ -281,13 +300,7 @@ export const resendOTP = async (req, res) => {
     // Update the OTP and expiry time in the database
     await userCollection.updateOne({ email }, { $set: { otp, otpExpiry } });
 
-    // Send the new OTP via email
-    await sendEmail({
-      to: email,
-      subject: "Resent OTP for Password Reset",
-      template: "cleanTemplate.ejs",
-      context: { otp },
-    });
+    sendTemplatedEmail(email, "Password Reset OTP", "", "otpTemplate.ejs", otp);
 
     return successResponse(res, "OTP resent to email");
   } catch (error) {
