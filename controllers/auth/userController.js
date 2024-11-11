@@ -198,7 +198,14 @@ export const forgetPassword = async (req, res) => {
     // Store the OTP and expiry time in the user's record
     await userCollection.updateOne({ email }, { $set: { otp, otpExpiry } });
 
-    sendTemplatedEmail(email, "Password Reset OTP", "", "otpTemplate.ejs", otp);
+    sendTemplatedEmail(
+      email,
+      "Password Reset OTP",
+      "",
+      "otpTemplate.ejs",
+      otp,
+      email
+    );
 
     return successResponse(res, "OTP sent to email");
   } catch (error) {

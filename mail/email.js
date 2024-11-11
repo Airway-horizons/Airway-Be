@@ -32,13 +32,14 @@ export const sendTemplatedEmail = async (
   subject,
   username,
   template,
-  data
+  otp,
+  email
 ) => {
   try {
     const templatePath = path.join(__dirname, template);
 
     // Render the HTML content from the EJS template
-    const html = await ejs.renderFile(templatePath, { username, data });
+    const html = await ejs.renderFile(templatePath, { username, otp, email });
 
     // Prepare the email options
     const mailOptions = {

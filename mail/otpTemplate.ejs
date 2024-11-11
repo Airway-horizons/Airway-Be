@@ -108,11 +108,19 @@
         <p>Please use the following 6-digit OTP to verify your account:</p>
         <div class="otp">
           <div class="otp-box">
-            <strong><%= data %></strong>
-            <!-- Replace with dynamic OTP in your backend code -->
+            <strong><%= otp %></strong>
+            <!-- Replace with dynamic OTP -->
           </div>
         </div>
         <p>This OTP is valid for 10 minutes.</p>
+        <p>
+          <a
+            href="https://airwayhorizons.com/auth/reset-password?email=<%= email %>&otp=<%= otp %>"
+            class="cta-button"
+          >
+            Click here to reset your password
+          </a>
+        </p>
       </div>
 
       <!-- Footer Section -->
