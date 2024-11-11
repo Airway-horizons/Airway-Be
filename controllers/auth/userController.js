@@ -232,7 +232,7 @@ export const verifyOTP = async (req, res) => {
 
 export const changePassword = async (req, res) => {
   try {
-    const { email, otp, newPassword } = req.body;
+    const { email, otp, password } = req.body;
     const userCollection = await connectDb(collectionNameUser);
 
     // Find the user and verify OTP
@@ -251,7 +251,7 @@ export const changePassword = async (req, res) => {
 
     const hashedPassword = await new Promise((resolve, reject) => {
       crypto.pbkdf2(
-        newPassword, // Password to hash
+        password, // Password to hash
         salt, // Salt value
         310000, // Iteration count (can adjust as needed)
         32, // Key length (32 bytes)
