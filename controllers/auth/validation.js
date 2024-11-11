@@ -33,18 +33,6 @@ export const loginSchema = Joi.object({
   }),
 });
 
-const profilePicture = Joi.object({
-  // The 'profilePicture' should be a required file object, with additional validations like size and type
-  fieldname: Joi.string().valid("profilePicture").required(), // Ensure the field is correctly named
-  originalname: Joi.string()
-    .regex(/\.(jpg|jpeg|png|gif)$/i)
-    .required(), // File extension validation
-  mimetype: Joi.string()
-    .valid("image/jpeg", "image/png", "image/gif")
-    .required(), // Mime type validation
-  size: Joi.number().max(3145728).required(), // Max size of 3MB (3145728 bytes)
-}).optional();
-
 // Joi validation schema
 export const userUpdateSchema = Joi.object({
   name: Joi.string().min(2).max(100).optional(),
@@ -53,6 +41,55 @@ export const userUpdateSchema = Joi.object({
   city: Joi.string().optional(),
   address: Joi.string().optional(),
   zipcode: Joi.string().optional(),
-  country: Joi.string().optional(),
-  profilePicture,
+});
+
+export const ForgetSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    "string.email": `Email must be a valid email`,
+    "string.empty": `Email cannot be an empty field`,
+    "any.required": `Email is a required field`,
+  }),
+});
+
+export const verifyOtpSchema = Joi.object({
+  otp: Joi.string().min(6).max(6).required().messages({
+    "string.base": `OTP should be a type of 'text'`,
+    "string.empty": `OTP cannot be an empty field`,
+    "string.min": `OTP should have a minimum length of {#limit}`,
+    "string.max": `OTP should have a maximum length of {#limit}`,
+    "any.required": `OTP is a required field`,
+  }),
+  email: Joi.string().email().required().messages({
+    "string.email": `Email must be a valid email`,
+    "string.empty": `Email cannot be an empty field`,
+    "any.required": `Email is a required field`,
+  }),
+});
+
+export const changePasswordSchema = Joi.object({
+  otp: Joi.string().min(6).max(6).required().messages({
+    "string.base": `OTP should be a type of 'text'`,
+    "string.empty": `OTP cannot be an empty field`,
+    "string.min": `OTP should have a minimum length of {#limit}`,
+    "string.max": `OTP should have a maximum length of {#limit}`,
+    "any.required": `OTP is a required field`,
+  }),
+  email: Joi.string().email().required().messages({
+    "string.email": `Email must be a valid email`,
+    "string.empty": `Email cannot be an empty field`,
+    "any.required": `Email is a required field`,
+  }),
+  password: Joi.string().min(8).required().messages({
+    "string.min": `Password should have a minimum length of {#limit}`,
+    "string.empty": `Password cannot be an empty field`,
+    "any.required": `Password is a required field`,
+  }),
+});
+
+export const resentSchema = Joi.object({
+  email: Joi.string().email().required().messages({
+    "string.email": `Email must be a valid email`,
+    "string.empty": `Email cannot be an empty field`,
+    "any.required": `Email is a required field`,
+  }),
 });

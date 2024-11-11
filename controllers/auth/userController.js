@@ -175,3 +175,123 @@ export const getUserById = async (req, res) => {
     errorResponse(res, "Update failed please try again", 500);
   }
 };
+
+export const forgetPassword = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const userCollection = await connectDb(collectionNameUser);
+    const findEmailRegistered = await userCollection.findOne({ email });
+
+    if (!findEmailRegistered) {
+      return errorResponse(res, "Email not found", 400);
+    }
+
+    // Generate a 6-digit OTP
+    const otp = crypto.randomInt(100000, 999999).toString();
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // OTP valid for 10 minutes
+
+    // Store the OTP and expiry time in the user's record
+    await userCollection.updateOne({ email }, { $set: { otp, otpExpiry } });
+
+    // Send OTP to user's email
+    await sendEmail({
+      to: email,
+      subject: "Password Reset OTP",
+      template: "cleanTemplate.ejs", // Adjust as needed
+      context: { otp }, // Pass OTP to email template
+    });
+
+    return successResponse(res, "OTP sent to email");
+  } catch (error) {
+    console.error("Error in forgetPassword:", error);
+    return errorResponse(res, "Failed to process request");
+  }
+};
+
+export const verifyOTP = async (req, res) => {
+  try {
+    const { email, otp } = req.body;
+    const userCollection = await connectDb(collectionNameUser);
+
+    // Find the user by email and check OTP
+    const user = await userCollection.findOne({ email });
+    if (!user || user.otp !== otp) {
+      return errorResponse(res, "Invalid OTP", 400);
+    }
+
+    // Check if OTP is expired
+    if (new Date() > new Date(user.otpExpiry)) {
+      return errorResponse(res, "OTP expired", 400);
+    }
+
+    return successResponse(res, "OTP verified");
+  } catch (error) {
+    console.error("Error in verifyOTP:", error);
+    return errorResponse(res, "Failed to verify OTP");
+  }
+};
+
+export const changePassword = async (req, res) => {
+  try {
+    const { email, otp, newPassword } = req.body;
+    const userCollection = await connectDb(collectionNameUser);
+
+    // Find the user and verify OTP
+    const user = await userCollection.findOne({ email });
+    if (!user || user.otp !== otp) {
+      return errorResponse(res, "Invalid OTP or email", 400);
+    }
+
+    // Check if OTP is expired
+    if (new Date() > new Date(user.otpExpiry)) {
+      return errorResponse(res, "OTP expired", 400);
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password and clear OTP fields
+    await userCollection.updateOne(
+      { email },
+      { $set: { password: hashedPassword }, $unset: { otp: "", otpExpiry: "" } }
+    );
+
+    return successResponse(res, "Password updated successfully");
+  } catch (error) {
+    console.error("Error in changePassword:", error);
+    return errorResponse(res, "Failed to update password");
+  }
+};
+
+export const resendOTP = async (req, res) => {
+  try {
+    const { email } = req.body;
+    const userCollection = await connectDb(collectionNameUser);
+
+    // Check if email exists in the system
+    const user = await userCollection.findOne({ email });
+    if (!user) {
+      return errorResponse(res, "Email not found", 400);
+    }
+
+    // Generate a new 6-digit OTP and expiry time
+    const otp = crypto.randomInt(100000, 999999).toString();
+    const otpExpiry = new Date(Date.now() + 10 * 60 * 1000); // OTP valid for 10 minutes
+
+    // Update the OTP and expiry time in the database
+    await userCollection.updateOne({ email }, { $set: { otp, otpExpiry } });
+
+    // Send the new OTP via email
+    await sendEmail({
+      to: email,
+      subject: "Resent OTP for Password Reset",
+      template: "cleanTemplate.ejs",
+      context: { otp },
+    });
+
+    return successResponse(res, "OTP resent to email");
+  } catch (error) {
+    console.error("Error in resendOTP:", error);
+    return errorResponse(res, "Failed to resend OTP");
+  }
+};
