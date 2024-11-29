@@ -18,7 +18,7 @@ const app = express();
 // Use CORS middleware
 app.use(
   cors({
-    origin: "https://airwayhorizons.com/", // Allows all origins. Change this to a specific origin in production
+    origin: "*", // Allows all origins. Change this to a specific origin in production
     methods: ["GET", "POST", "PATCH", "DELETE"], // Allowed HTTP methods
     allowedHeaders: ["Content-Type", "Authorization"], // Allowed headers
   })
